@@ -1,0 +1,827 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "LibTrack System API",
+        "description": "API documentation for the LibTrack Library Tracking System",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Local Development Server"
+        }
+    ],
+    "paths": {
+        "/api/admin/register": {
+            "post": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Register a new admin",
+                "description": "Register a new admin.",
+                "operationId": "cb562e036ec11873a898f9a8df236422",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "LibTrack Admin"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@libtrack.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Admin registered successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/admin/login": {
+            "post": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Login as admin",
+                "description": "Login an admin.",
+                "operationId": "52072ab0ab3a6409abf44ae228659d79",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@libtrack.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    },
+                    "403": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/admin/logout": {
+            "post": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Logout authenticated admin",
+                "description": "Logout the authenticated admin.",
+                "operationId": "db8d26e4c798faabe0c89ea0adfc8c31",
+                "responses": {
+                    "200": {
+                        "description": "Logged out successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/profile": {
+            "get": {
+                "tags": [
+                    "Admin Authentication"
+                ],
+                "summary": "Get authenticated admin profile",
+                "description": "Get authenticated admin profile.",
+                "operationId": "9c6bd26acd1807dc403390b65ed6698d",
+                "responses": {
+                    "200": {
+                        "description": "Admin profile retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/books": {
+            "get": {
+                "tags": [
+                    "Book Management"
+                ],
+                "summary": "Get all books",
+                "operationId": "3928b0b6916b8d707bd9de0c7f7225be",
+                "responses": {
+                    "200": {
+                        "description": "Books retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Book Management"
+                ],
+                "summary": "Add a new book",
+                "operationId": "d6741a88ba80015e1bfefdc77c8c813e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "author",
+                                    "isbn",
+                                    "category",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Introduction to Networking"
+                                    },
+                                    "author": {
+                                        "type": "string",
+                                        "example": "Jain Alawi"
+                                    },
+                                    "isbn": {
+                                        "type": "string",
+                                        "example": "978-1234567890"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Networking"
+                                    },
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "A basic introduction to computer networking."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book added successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/books/{id}": {
+            "get": {
+                "tags": [
+                    "Book Management"
+                ],
+                "summary": "Get a single book",
+                "operationId": "e9679e2bc7bda8c467a7ff22d24e9187",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Book Management"
+                ],
+                "summary": "Update a book",
+                "operationId": "44f7915e0c88331f8aebe4478bc0f6d0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "author": {
+                                        "type": "string"
+                                    },
+                                    "isbn": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "quantity": {
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book updated successfully"
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Book Management"
+                ],
+                "summary": "Delete a book",
+                "operationId": "6f5009124f6d6459be39acfb5555f91f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book deleted successfully"
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/borrowings": {
+            "get": {
+                "tags": [
+                    "Borrowing Management"
+                ],
+                "summary": "Get all borrowing records",
+                "description": "Get all borrowing records.",
+                "operationId": "6988a4fcbb4200fc5232f7679ecb77c8",
+                "responses": {
+                    "200": {
+                        "description": "Borrowing records retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Borrowing Management"
+                ],
+                "summary": "Borrow a book",
+                "description": "Borrow a book.",
+                "operationId": "f14526da76d72ab46d8d860cad93c4f8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "book_id",
+                                    "student_id",
+                                    "due_date"
+                                ],
+                                "properties": {
+                                    "book_id": {
+                                        "type": "string",
+                                        "example": "BOOK_MONGODB_ID"
+                                    },
+                                    "student_id": {
+                                        "type": "string",
+                                        "example": "STUDENT_MONGODB_ID"
+                                    },
+                                    "due_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-09-20"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book borrowed successfully"
+                    },
+                    "400": {
+                        "description": "Book unavailable"
+                    },
+                    "404": {
+                        "description": "Book or student not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/borrowings/active": {
+            "get": {
+                "tags": [
+                    "Borrowing Management"
+                ],
+                "summary": "Get active borrowings",
+                "description": "Get active borrowings.",
+                "operationId": "1e29f99675f3b0a3185984415d85dacd",
+                "responses": {
+                    "200": {
+                        "description": "Active borrowings retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/borrowings/{id}": {
+            "get": {
+                "tags": [
+                    "Borrowing Management"
+                ],
+                "summary": "Get a single borrowing record",
+                "description": "Get a single borrowing record.",
+                "operationId": "6c3d68dc120535f44ac186ed10709ee3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Borrowing record retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Borrowing record not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/borrowings/{id}/return": {
+            "put": {
+                "tags": [
+                    "Borrowing Management"
+                ],
+                "summary": "Return a borrowed book",
+                "description": "Return a borrowed book.",
+                "operationId": "7f1fd1e4b24cce893fc301553903defd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book returned successfully"
+                    },
+                    "400": {
+                        "description": "Book already returned"
+                    },
+                    "404": {
+                        "description": "Borrowing record not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/dashboard": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get dashboard statistics",
+                "description": "Get dashboard statistics.",
+                "operationId": "acfff5cb2372e9486204f0dbfe4ab221",
+                "responses": {
+                    "200": {
+                        "description": "Dashboard statistics retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/students": {
+            "get": {
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Get all students",
+                "description": "Get all students.",
+                "operationId": "a3ffe8a4a14d8857f503c0adc64fbfe9",
+                "responses": {
+                    "200": {
+                        "description": "Students retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Add a new student",
+                "description": "Add a new student.",
+                "operationId": "5fe8b8373adb655a4bcc37176299076f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "student_id",
+                                    "name",
+                                    "email",
+                                    "course",
+                                    "year_level"
+                                ],
+                                "properties": {
+                                    "student_id": {
+                                        "type": "string",
+                                        "example": "2023-00123"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Dela Cruz"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan@example.com"
+                                    },
+                                    "course": {
+                                        "type": "string",
+                                        "example": "BSIT"
+                                    },
+                                    "year_level": {
+                                        "type": "integer",
+                                        "example": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Student added successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/students/{id}": {
+            "get": {
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Get a student",
+                "description": "Get a single student.",
+                "operationId": "62e23fb67b934566371286b9e57f57d2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Update a student",
+                "description": "Update a student.",
+                "operationId": "64df7ac4d4906e97d7a419f62bb9c792",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "student_id": {
+                                        "type": "string",
+                                        "example": "2023-00123"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Dela Cruz"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "juan@example.com"
+                                    },
+                                    "course": {
+                                        "type": "string",
+                                        "example": "BSIT"
+                                    },
+                                    "year_level": {
+                                        "type": "integer",
+                                        "example": 4
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Student updated successfully"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Delete a student",
+                "description": "Delete a student.",
+                "operationId": "261807efc64d178fdd49492d5ca601fe",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Student ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Student deleted successfully"
+                    },
+                    "404": {
+                        "description": "Student not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "bearerFormat": "Bearer Token",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Admin Authentication",
+            "description": "Admin Authentication"
+        },
+        {
+            "name": "Book Management",
+            "description": "Book Management"
+        },
+        {
+            "name": "Borrowing Management",
+            "description": "Borrowing Management"
+        },
+        {
+            "name": "Dashboard",
+            "description": "Dashboard"
+        },
+        {
+            "name": "Students",
+            "description": "Students"
+        }
+    ]
+}
